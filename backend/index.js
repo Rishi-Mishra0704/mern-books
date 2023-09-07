@@ -86,3 +86,17 @@ app.post("/books", async (req, res) => {
     console.log(error);
   }
 });
+
+
+//delete
+app.delete("/books/:id", async (req, res) => {
+    try {
+        const result = await Book.findByIdAndDelete(req.params.id);
+        if (!result) {
+            res.status(400).send("Book not found");
+        }
+        res.status(200).send("Book deleted successfully");
+    } catch (error) {
+        console.log(error);
+    }
+});
