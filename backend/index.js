@@ -33,27 +33,41 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-
 // get all books
 app.get("/books", async (req, res) => {
-    try {
-        const books = await Book.find({});
-        res.status(200).send(books);
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const books = await Book.find({});
+    res.status(200).send(books);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // get a book by id
 app.get("/books/:id", async (req, res) => {
-    try {
-        const book = await Book.findById(req.params.id);
-        res.status(200).send(book);
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const book = await Book.findById(req.params.id);
+    res.status(200).send(book);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
+//update a book by id
+app.put("/books/:id", async (req, res) => {
+  try {
+    if (!req.body.title || !req.body.author || !req.body.publishYear) {
+      res.status(400).send("Please fill all the fields");
+    }
+    const result = Book.findByIdAndUpdate(req.params.id, req.body);
+    if (!result) {
+      res.status(400).send("Book not found");
+    }
+    res.status(200).send("Book updated successfully");
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 //post
 app.post("/books", async (req, res) => {
