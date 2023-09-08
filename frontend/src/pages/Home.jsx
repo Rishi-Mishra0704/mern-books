@@ -16,7 +16,7 @@ const Home = () => {
     axios
       .get('http://localhost:5555/books')
       .then((response) => {
-        setBooks(response.data.data);
+        setBooks(response.data);
         setLoading(false);
       })
       .catch((error) => {
